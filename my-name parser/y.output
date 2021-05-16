@@ -1,0 +1,142 @@
+
+state 0
+	$accept: .result $end 
+
+	HARKISHEN  shift 4
+	SINGH  shift 7
+	RANDOM  shift 5
+	.  error
+
+	sentence  goto 2
+	keyword  goto 3
+	either  goto 6
+	result  goto 1
+
+state 1
+	$accept:  result.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	result:  sentence.    (1)
+	sentence:  sentence.keyword 
+
+	HARKISHEN  shift 4
+	SINGH  shift 7
+	RANDOM  shift 5
+	.  reduce 1 (src line 21)
+
+	keyword  goto 8
+	either  goto 6
+
+3: shift/reduce conflict (shift 4(0), red'n 2(0)) on HARKISHEN
+3: shift/reduce conflict (shift 7(0), red'n 2(0)) on SINGH
+3: shift/reduce conflict (shift 5(0), red'n 2(0)) on RANDOM
+state 3
+	sentence:  keyword.    (2)
+	sentence:  keyword.sentence 
+
+	HARKISHEN  shift 4
+	SINGH  shift 7
+	RANDOM  shift 5
+	.  reduce 2 (src line 29)
+
+	sentence  goto 9
+	keyword  goto 3
+	either  goto 6
+
+4: shift/reduce conflict (shift 10(0), red'n 10(0)) on SINGH
+state 4
+	keyword:  HARKISHEN.SINGH 
+	either:  HARKISHEN.    (10)
+
+	SINGH  shift 10
+	.  reduce 10 (src line 41)
+
+
+5: shift/reduce conflict (shift 12(0), red'n 6(0)) on HARKISHEN
+5: shift/reduce conflict (shift 7(0), red'n 6(0)) on SINGH
+state 5
+	keyword:  RANDOM.    (6)
+	keyword:  RANDOM.either 
+
+	HARKISHEN  shift 12
+	SINGH  shift 7
+	.  reduce 6 (src line 35)
+
+	either  goto 11
+
+6: shift/reduce conflict (shift 13(0), red'n 9(0)) on RANDOM
+state 6
+	keyword:  either.RANDOM 
+	keyword:  either.    (9)
+
+	RANDOM  shift 13
+	.  reduce 9 (src line 38)
+
+
+state 7
+	either:  SINGH.    (11)
+
+	.  reduce 11 (src line 42)
+
+
+state 8
+	sentence:  sentence keyword.    (3)
+
+	.  reduce 3 (src line 30)
+
+
+9: shift/reduce conflict (shift 4(0), red'n 4(0)) on HARKISHEN
+9: shift/reduce conflict (shift 7(0), red'n 4(0)) on SINGH
+9: shift/reduce conflict (shift 5(0), red'n 4(0)) on RANDOM
+state 9
+	sentence:  sentence.keyword 
+	sentence:  keyword sentence.    (4)
+
+	HARKISHEN  shift 4
+	SINGH  shift 7
+	RANDOM  shift 5
+	.  reduce 4 (src line 31)
+
+	keyword  goto 8
+	either  goto 6
+
+state 10
+	keyword:  HARKISHEN SINGH.    (5)
+
+	.  reduce 5 (src line 34)
+
+
+state 11
+	keyword:  RANDOM either.    (8)
+
+	.  reduce 8 (src line 37)
+
+
+state 12
+	either:  HARKISHEN.    (10)
+
+	.  reduce 10 (src line 41)
+
+
+state 13
+	keyword:  either RANDOM.    (7)
+
+	.  reduce 7 (src line 36)
+
+
+6 terminals, 5 nonterminals
+12 grammar rules, 14/16000 states
+10 shift/reduce, 0 reduce/reduce conflicts reported
+54 working sets used
+memory: parser 9/240000
+0 extra closures
+16 shift entries, 1 exceptions
+8 goto entries
+4 entries saved by goto default
+Optimizer space used: output 17/240000
+17 table entries, 2 zero
+maximum spread: 6, maximum offset: 9
