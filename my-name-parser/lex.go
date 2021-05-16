@@ -3,14 +3,14 @@ package main
 import "strings"
 
 type lexicalAnalyzer struct {
-	input string
+	input    string
 	inputArr []string
-	current int
+	current  int
 }
 
 func (l *lexicalAnalyzer) Lex(s *yySymType) int {
 	if !l.hasNext() {
-		return 0;
+		return 0
 	}
 	str := l.next()
 	switch n := strings.ToLower(str); n {
@@ -29,7 +29,6 @@ func (l *lexicalAnalyzer) Error(err string) {
 	panic(err)
 }
 
-
 func (l *lexicalAnalyzer) next() string {
 	l.current++
 	return l.inputArr[l.current-1]
@@ -44,4 +43,3 @@ func main() {
 	arr := strings.Split(str, " ")
 	yyParse(&lexicalAnalyzer{input: str, inputArr: arr})
 }
-
