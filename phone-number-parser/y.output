@@ -1,0 +1,131 @@
+
+state 0
+	$accept: .result $end 
+
+	DIGIT  shift 6
+	SYMBOL  shift 3
+	.  error
+
+	digit_set  goto 5
+	number  goto 4
+	phone_number  goto 2
+	result  goto 1
+
+state 1
+	$accept:  result.$end 
+
+	$end  accept
+	.  error
+
+
+state 2
+	result:  phone_number.    (1)
+
+	.  reduce 1 (src line 26)
+
+
+state 3
+	phone_number:  SYMBOL.digit_pair number 
+
+	DIGIT  shift 8
+	.  error
+
+	digit_pair  goto 7
+
+state 4
+	phone_number:  number.    (3)
+
+	.  reduce 3 (src line 32)
+
+
+state 5
+	number:  digit_set.digit_set 
+
+	DIGIT  shift 6
+	.  error
+
+	digit_set  goto 9
+
+state 6
+	digit_set:  DIGIT.DIGIT DIGIT DIGIT DIGIT 
+
+	DIGIT  shift 10
+	.  error
+
+
+state 7
+	phone_number:  SYMBOL digit_pair.number 
+
+	DIGIT  shift 6
+	.  error
+
+	digit_set  goto 5
+	number  goto 11
+
+8: shift/reduce conflict (shift 12(0), red'n 6(0)) on DIGIT
+state 8
+	digit_pair:  DIGIT.DIGIT 
+	digit_pair:  DIGIT.    (6)
+
+	DIGIT  shift 12
+	.  error
+
+
+state 9
+	number:  digit_set digit_set.    (4)
+
+	.  reduce 4 (src line 35)
+
+
+state 10
+	digit_set:  DIGIT DIGIT.DIGIT DIGIT DIGIT 
+
+	DIGIT  shift 13
+	.  error
+
+
+state 11
+	phone_number:  SYMBOL digit_pair number.    (2)
+
+	.  reduce 2 (src line 31)
+
+
+state 12
+	digit_pair:  DIGIT DIGIT.    (5)
+
+	.  reduce 5 (src line 38)
+
+
+state 13
+	digit_set:  DIGIT DIGIT DIGIT.DIGIT DIGIT 
+
+	DIGIT  shift 14
+	.  error
+
+
+state 14
+	digit_set:  DIGIT DIGIT DIGIT DIGIT.DIGIT 
+
+	DIGIT  shift 15
+	.  error
+
+
+state 15
+	digit_set:  DIGIT DIGIT DIGIT DIGIT DIGIT.    (7)
+
+	.  reduce 7 (src line 42)
+
+Rule not reduced: digit_pair:  DIGIT 
+
+6 terminals, 6 nonterminals
+8 grammar rules, 16/16000 states
+1 shift/reduce, 0 reduce/reduce conflicts reported
+55 working sets used
+memory: parser 8/240000
+0 extra closures
+10 shift entries, 1 exceptions
+7 goto entries
+1 entries saved by goto default
+Optimizer space used: output 16/240000
+16 table entries, 0 zero
+maximum spread: 5, maximum offset: 7
